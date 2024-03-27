@@ -7,15 +7,15 @@ params:
   lang: ES
 lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
 output:
-  pdf_document:
-    toc: no
-    toc_depth: 3
-    number_sections: yes
   html_document:
     echo: yes
     number_sections: yes
     theme: lumen
     toc: yes
+  pdf_document:
+    toc: no
+    toc_depth: 3
+    number_sections: yes
   html_notebook:
     echo: yes
     number_sections: yes
@@ -255,11 +255,8 @@ pack_sum <- by_package %>% summarise(
 ```
 22. Muestra el 1% de los paquetes que han sido más descargados. Para ello puedes utilizar la función `quantile(????, probs=0.99)`. Siendo ??? la variable de interés, que te permitirá estimar el umbral. Los valores por encima serán los que nos interesen. Almacena estos paquetes **top descargas** en la variable `top_counts`. **NOTA: De ahora en adelante concatena todas las operaciones partiendo del elemento `cran`, usando _pipes_**.
 ```{r}
-
-
-
-
-
+top_counts <- by_package %>% summarise(download_count = n()) %>% 
+  filter(download_count > quantile(download_count, probs = 0.99))
 
 ```
 23. Repite el apartado anterior utilizando **pipes** para que finalmente el resultado se ordene, en orden descendente, según el número de descargas (`count`) y se almacene el la variable `top_counts_sorted`
